@@ -1,0 +1,110 @@
+#+TITLE: Atta
+#+AUTHOR: Vaishakh G K
+#+EMAIL: vaishakhgk2006@gmail.com
+
+This is the frontend for the Atta website, which facilitates anonymous chatting with strangers on the internet.
+
+* Table of Contents :toc:
+- [[#features][Features]]
+- [[#technologies-used][Technologies Used]]
+- [[#contributing][Contributing]]
+- [[#license][License]]
+- [[#contact][Contact]]
+
+* Features
+**** User-Friendly Interface
+   - Clean and intuitive design for seamless user experience.
+
+**** Responsive Design
+   - Fully responsive layout to ensure usability across different devices.
+
+**** Anonymous Chatting
+   - Engage in anonymous conversations with other users.
+
+**** Random Matching
+   - Be randomly matched with other online users for one-on-one chats.
+
+**** Interest-Based Chat Rooms
+   - Join chat rooms based on shared interests or topics.
+
+**** Real-time Messaging
+   - Instant messaging with real-time updates for smooth communication.
+
+**** Notifications
+   - Get notifications for new messages, friend requests, etc., to stay engaged.
+
+**** Multi-language Support
+   - Interface supports multiple languages for global participation.
+
+**** User Authentication and Privacy
+   - Secure login and management of personal information with options to control privacy settings and visibility.
+
+* Technologies Used
+- React
+- JS
+- WebSocket
+- WebRTC
+- CSS
+- HTML5
+
+* Contributing
+Contributions are welcome! To contribute to this project:
+***** 1. Fork the project
+***** 2. Clone the fork
+#+begin_src bash
+git clone https://github.com/<username>/atta-frontend.git
+#+end_src
+***** 3. Add Upstream
+#+begin_src bash
+git remote add upstream https://github.com/VAISHAKH-GK/atta-frontend
+#+end_src
+***** 4. Create a new branch
+#+begin_src bash
+git checkout -b feature
+#+end_src
+
+***** 5. Make your changes
+***** 6. Commit your changes
+#+begin_src bash
+git commit -am "Add new feature"
+#+end_src
+***** 7. Update main
+#+begin_src bash
+git checkout main
+git pull upstream main
+#+end_src
+***** 8. Rebase to main
+#+begin_src bash
+git checkout feature
+git rebase main
+#+end_src
+***** 9. Push to the branch
+#+begin_src bash
+git push origin feature
+#+end_src
+***** 10. Create a new Pull Request
+
+* License
+[[file:LICENSE][The GPLv3 License (GPLv3)]]
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see [[https://www.gnu.org/licenses/gpl-3.0][GPLv3]].
+
+* Contact
+***** Shreyas S K
+- Email: [[mailto:shreyassk.dev+atta@gmail.com][shreayassk.dev@gmail.com]]
+- Github: [[https://github.com/shreyasskdev/][Shreyas S K]]
+
+***** Vaishkah G K
+- Email: [[mailto:vaishakhgk2006@gmail.com][vaishakhgk2006@gmail.com]]
+- Website: [[https://vaishakhgk.com][Vaishakh GK]]
+- Github: [[https://github.com/VAISHAKH-GK/][VAISHAKH-GK]]
