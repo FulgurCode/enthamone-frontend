@@ -1,5 +1,4 @@
 import styles from "../styles/Video.module.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function Video() {
     return(
         <>
