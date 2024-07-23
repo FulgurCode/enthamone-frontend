@@ -1,5 +1,32 @@
+import {useEffect,useState} from "react"
 import styles from "../styles/Video.module.css"
+
 function Video() {
+    const [webSocket,setWebSocket] = useState()
+    const [id,setId] = useState("")
+
+    useEffect(() => {
+        setWebSocket(
+            new WebSocket("ws://localhost:3000/ws/start"),
+        );
+        return () => {
+            if (webSocket) {
+                webSocket.close();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (webSocket) {
+            webSocket.addEventListener("message", (event) => {
+                let data = JSON.parse(event.data)
+                if (data.messageType == "ID") {
+                    setId(data.content)
+                }
+            })
+        }
+    },[webSocket])
+
     return(
         <>
             <div className={styles.main}>
