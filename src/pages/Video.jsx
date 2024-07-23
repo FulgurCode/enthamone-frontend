@@ -4,11 +4,13 @@ import styles from "../styles/Video.module.css"
 function Video() {
     const [webSocket,setWebSocket] = useState()
     const [id,setId] = useState("")
+    const [messages,setMessages] = useState([])
 
     useEffect(() => {
         setWebSocket(
             new WebSocket("ws://localhost:3000/ws/start"),
         );
+
         return () => {
             if (webSocket) {
                 webSocket.close();
@@ -22,6 +24,9 @@ function Video() {
                 let data = JSON.parse(event.data)
                 if (data.messageType == "ID") {
                     setId(data.content)
+                } else if (data.messageType == "CHAT") {
+                    setMessages(msg => [...msg, data])
+                    console.log(data.content)
                 }
             })
         }
