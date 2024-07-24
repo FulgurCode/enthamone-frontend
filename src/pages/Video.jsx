@@ -32,6 +32,9 @@ function Video() {
                     console.log(data)
                     if (data.category == "CONNECTED_SIGNAL") {
                         setConnectedUserId(data.content)
+                    } else if (data.category == "DISCONNECTED_SIGNAL") {
+                        setConnectedUserId("")
+                        setMessages([])
                     }
                 }
             })
