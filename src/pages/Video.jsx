@@ -28,6 +28,7 @@ function Video() {
                 if (data.messageType == "ID") {
                     setId(data.content)
                 } else if (data.messageType == "CHAT") {
+                    console.log(data.content)
                     setMessages(msg => [...msg, data])
                 } else if (data.messageType == "SIGNAL") {
                     console.log(data)
@@ -56,8 +57,10 @@ function Video() {
 
     useEffect(() => {
         if (stream) {
-            const videoElement = document.querySelector('video#localVideo');
-            videoElement.srcObject = stream;
+            const localVideoElement = document.querySelector('video#localVideo');
+            const remoteVideoElement = document.querySelector('video#remoteVideo');
+            localVideoElement.srcObject = stream;
+            remoteVideoElement.srcObject = stream;
         }
     },[stream])
 
@@ -79,6 +82,7 @@ function Video() {
                 <header><h1>Atta</h1></header>
                 <div className={styles.content}>
                     <div className={styles.video}>
+                        <video srcobject={stream} className={styles.video} id="remoteVideo" autoPlay controls={false} />
                         {/* <div className={styles.videoSmall}> */}
                         <video srcobject={stream} className={styles.videoSmall} id="localVideo" autoPlay controls={false} />
                         {/* </div> */}
