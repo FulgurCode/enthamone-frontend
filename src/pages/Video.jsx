@@ -4,7 +4,9 @@ import styles from "../styles/Video.module.css"
 function Video() {
     const [webSocket,setWebSocket] = useState()
     const [id,setId] = useState("")
+    const [connectedUserId,setConnectedUserId] = useState("")
     const [messages,setMessages] = useState([])
+    const [message,setMessage] = useState("")
 
     useEffect(() => {
         setWebSocket(
@@ -26,11 +28,27 @@ function Video() {
                     setId(data.content)
                 } else if (data.messageType == "CHAT") {
                     setMessages(msg => [...msg, data])
-                    console.log(data.content)
+                } else if (data.messageType == "SIGNAL") {
+                    console.log(data)
+                    if (data.category == "CONNECTED_SIGNAL") {
+                        setConnectedUserId(data.content)
+                    }
                 }
             })
         }
     },[webSocket])
+
+    function sendMsg() {
+        var msg = {
+            to: connectedUserId,
+            messageType: "CHAT",
+            content: message,
+        }
+
+        webSocket.send(JSON.stringify(msg))
+        setMessage("")
+        setMessages(m => [...m, msg])
+    }
 
     return(
         <>
@@ -43,8 +61,8 @@ function Video() {
                     <div className={styles.chat}>
                         <div className={styles.msg}></div>
                         <div className={styles.textArea}>
-                            <textarea placeholder="Type a message"></textarea>
-                            <button>send</button>
+                            <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Type a message"></textarea>
+                            <button onClick={sendMsg}>send</button>
                         </div>
                     </div>
                 </div>
