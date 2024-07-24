@@ -7,6 +7,7 @@ function Video() {
     const [connectedUserId,setConnectedUserId] = useState("")
     const [messages,setMessages] = useState([])
     const [message,setMessage] = useState("")
+    const [stream,setStream] = useState()
 
     useEffect(() => {
         setWebSocket(
@@ -41,6 +42,25 @@ function Video() {
         }
     },[webSocket])
 
+    useEffect(() => {
+        async function playVideoFromCamera() {
+            const constraints = {'video': true, 'audio': true};
+            navigator.mediaDevices.getUserMedia(constraints).then((s) => {
+                setStream(s)
+            }).catch(e => {
+                console.error('Error opening video camera.', error);
+            })
+        }
+        playVideoFromCamera()
+    },[])
+
+    useEffect(() => {
+        if (stream) {
+            const videoElement = document.querySelector('video#localVideo');
+            videoElement.srcObject = stream;
+        }
+    },[stream])
+
     function sendMsg() {
         var msg = {
             to: connectedUserId,
@@ -59,7 +79,9 @@ function Video() {
                 <header><h1>Atta</h1></header>
                 <div className={styles.content}>
                     <div className={styles.video}>
-                        <div className={styles.videoSmall}></div>
+                        {/* <div className={styles.videoSmall}> */}
+                        <video srcobject={stream} className={styles.videoSmall} id="localVideo" autoPlay controls={false} />
+                        {/* </div> */}
                     </div>
                     <div className={styles.chat}>
                         <div className={styles.msg}></div>
