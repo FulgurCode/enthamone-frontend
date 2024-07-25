@@ -11,6 +11,7 @@
     --background-shade-2: hsl(195, 43%, 8%);
     --background-shade-3: hsl(195, 43%, 10%);
     --background-shade-4: hsl(195, 43%, 20%);
+    --accent-shade-1: hsl(196, 63%, 25%);
 }
 
 body, html{
@@ -34,3 +35,38 @@ body, html{
 
  color: var(--text);
 }
+
+
+/* For WebKit-based browsers like Chrome and Safari*/
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--background-shade-4);
+    border-radius: 50px;
+  }
+  
+  /* For Firefox */
+  .scrollbar {
+    scrollbar-width: 5px;
+    scrollbar-height: 5px;
+    scrollbar-color: var(--background-shade-4) transparent;
+  }
+  
+  .scrollbar-thumb {
+    background-color: var(--background-shade-4);
+  }
+
+  /* For Firefox older versions */
+  @-moz-document url-prefix() {
+    .scrollbar-thumb:hover {
+      width: 12px;
+    }
+  }
+  
+  
+  *:focus{
+    outline: 2px solid var(--accent);
+  }

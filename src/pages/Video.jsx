@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react"
+import {useEffect,useRef,useState} from "react"
 import styles from "../styles/Video.module.css"
 
 function Video() {
@@ -8,6 +8,7 @@ function Video() {
     const [messages,setMessages] = useState([])
     const [message,setMessage] = useState("")
     const [stream,setStream] = useState()
+    const msgRef = useRef(null)
 
     useEffect(() => {
         setWebSocket(
@@ -28,7 +29,7 @@ function Video() {
                 if (data.messageType == "ID") {
                     setId(data.content)
                 } else if (data.messageType == "CHAT") {
-                    console.log(data.content)
+                    console.log(data)
                     setMessages(msg => [...msg, data])
                 } else if (data.messageType == "SIGNAL") {
                     console.log(data)
@@ -64,7 +65,14 @@ function Video() {
         }
     },[stream])
 
+    // message scroll to bottom when updating
+    useEffect(() => {
+        msgRef.current.scrollTop = msgRef.current.scrollHeight;
+    }, [messages])
+
     function sendMsg() {
+        if (message == "") return;
+
         var msg = {
             to: connectedUserId,
             messageType: "CHAT",
@@ -81,14 +89,28 @@ function Video() {
             <div className={styles.main}>
                 <header><h1>Atta</h1></header>
                 <div className={styles.content}>
+
+                    {/* Video */}
                     <div className={styles.video}>
-                        <video srcobject={stream} className={styles.video} id="remoteVideo" autoPlay controls={false} />
-                        {/* <div className={styles.videoSmall}> */}
-                        <video srcobject={stream} className={styles.videoSmall} id="localVideo" autoPlay controls={false} />
-                        {/* </div> */}
+                        <video srcobject={stream} id="remoteVideo" autoPlay controls={false} />
+
+                        {/* Small video */}
+                        <div className={styles.videoSmall}>
+                            <video srcobject={stream} id="localVideo" autoPlay controls={false} />
+                        </div>
                     </div>
+
                     <div className={styles.chat}>
-                        <div className={styles.msg}></div>
+
+                        {/* message container */}
+                        <div className={styles.msg} ref={msgRef}>
+                            {messages.map((message, index) => (
+                                <div key={index} className={message.to == connectedUserId ? styles.sent : styles.received}>
+                                    {message.content}
+                                </div>
+                            ))}
+                        </div>
+
                         <div className={styles.textArea}>
                             <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Type a message"></textarea>
                             <button onClick={sendMsg}>send</button>
