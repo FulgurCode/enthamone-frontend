@@ -39,34 +39,32 @@ body, html{
 
 /* For WebKit-based browsers like Chrome and Safari*/
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--background-shade-4);
+  border-radius: 50px;
+}
   
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--background-shade-4);
-    border-radius: 50px;
-  }
-  
-  /* For Firefox */
-  .scrollbar {
-    scrollbar-width: 5px;
-    scrollbar-height: 5px;
-    scrollbar-color: var(--background-shade-4) transparent;
-  }
-  
-  .scrollbar-thumb {
-    background-color: var(--background-shade-4);
-  }
+/* For Firefox */
+.scrollbar {
+  scrollbar-width: 5px;
+  scrollbar-height: 5px;
+  scrollbar-color: var(--background-shade-4) transparent;
+}
+.scrollbar-thumb {
+  background-color: var(--background-shade-4);
+}
 
-  /* For Firefox older versions */
-  @-moz-document url-prefix() {
-    .scrollbar-thumb:hover {
-      width: 12px;
-    }
+/* For Firefox older versions */
+@-moz-document url-prefix() {
+  .scrollbar-thumb:hover {
+    width: 12px;
   }
+}
   
   
-  *:focus{
-    outline: 2px solid var(--accent);
-  }
+*:focus{
+  outline: 2px solid var(--accent);
+}

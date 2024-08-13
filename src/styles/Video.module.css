@@ -106,6 +106,9 @@ footer{
     gap: 5px;
     padding: 10px;
 }
+.chat > .msg > :first-child{
+    margin-top: auto;
+}
 
 .chat > .msg >  .sent, .chat > .msg > .received{
     padding: 10px;
