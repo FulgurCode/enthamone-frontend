@@ -124,6 +124,9 @@ footer {
     font-size: large;
     padding: 12px 10px;
     resize: none;
+
+    font-family: inherit;
+    font-size: inherit;
 }
 .chat > .textArea > button {
     flex: 1;
