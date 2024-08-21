@@ -221,7 +221,7 @@ function Video() {
     <>
       <div className={styles.main}>
         <header>
-          <h1>Atta</h1>
+          <h1>ENTHA MONE</h1>
         </header>
         <div className={styles.content}>
           {/* Video */}

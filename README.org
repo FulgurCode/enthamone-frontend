@@ -1,8 +1,8 @@
-#+TITLE: Atta
+#+TITLE: Entha Mone
 #+AUTHOR: Vaishakh G K
 #+EMAIL: vaishakhgk2006@gmail.com
 
-This is the frontend for the Atta website, which facilitates anonymous chatting with strangers on the internet.
+This is the frontend for the Enthamone website, which facilitates anonymous chatting with strangers on the internet.
 
 * Table of Contents :toc:
 - [[#features][Features]]
@@ -52,11 +52,11 @@ Contributions are welcome! To contribute to this project:
 ***** 1. Fork the project
 ***** 2. Clone the fork
 #+begin_src bash
-git clone https://github.com/<username>/atta-frontend.git
+git clone https://github.com/<username>/enthamone-frontend.git
 #+end_src
 ***** 3. Add Upstream
 #+begin_src bash
-git remote add upstream https://github.com/VAISHAKH-GK/atta-frontend
+git remote add upstream https://github.com/VAISHAKH-GK/enthamone-frontend
 #+end_src
 ***** 4. Create a new branch
 #+begin_src bash
@@ -101,7 +101,7 @@ along with this program.  If not, see [[https://www.gnu.org/licenses/gpl-3.0][GP
 
 * Contact
 ***** Shreyas S K
-- Email: [[mailto:shreyassk.dev+atta@gmail.com][shreayassk.dev@gmail.com]]
+- Email: [[mailto:shreyassk.dev+enthamone@gmail.com][shreayassk.dev@gmail.com]]
 - Github: [[https://github.com/shreyasskdev/][Shreyas S K]]
 
 ***** Vaishkah G K
