@@ -80,7 +80,13 @@ function Video() {
       messageType: "SIGNAL",
       category: "CONNECT_REQ",
     };
-    webSocketRef.current.send(JSON.stringify(msg));
+    try {
+        webSocketRef.current.send(JSON.stringify(msg));
+    } catch (e) {
+        webSocketRef.onopen = function (){
+            webSocketRef.current.send(JSON.stringify(msg));
+        }
+    }
   }
 
   useEffect(() => {
