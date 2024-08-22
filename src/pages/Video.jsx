@@ -31,35 +31,28 @@ function Video() {
             connectedUserId.current = data.content;
             offerConnection(data.content);
           } else if (data.category == "DISCONNECT_SIGNAL") {
+            setMessage("");
+            setMessages([]);
+
             connectedUserId.current = "";
+            peerRef.current.close();
+
+            remoteStream.current = new MediaStream();
+            remoteVideo.current.srcObject = remoteStream.current;
             setMessages([]);
           } else if (data.category == "ICE_SIGNAL") {
             try {
-              const candidate = new RTCIceCandidate(data.content)
-              console.log(data.content)
-              peerRef.current
-                .addIceCandidate(candidate)
-                .then(() => {
-                  console.log("ice added");
-                })
-                .catch((e) => {
-                  console.log("hello error");
-                  console.log(e);
-                });
+              const candidate = new RTCIceCandidate(data.content);
+              peerRef.current.addIceCandidate(candidate);
             } catch (err) {
-              console.log("ice error");
               console.log(err);
             }
           }
         } else if (data.messageType == "OFFER") {
           if (data.category == "OFFER_REQ") {
-            // console.log(data)
-            console.log("req");
             connectedUserId.current = data.from;
             handleOffer(data.from, data.content);
           } else if (data.category == "OFFER_ACC") {
-            // console.log(data.content)
-            console.log("anserr")
             handleAnswer(data.content);
           }
         }
@@ -80,16 +73,17 @@ function Video() {
       messageType: "SIGNAL",
       category: "CONNECT_REQ",
     };
+
     try {
-        webSocketRef.current.send(JSON.stringify(msg));
+      webSocketRef.current.send(JSON.stringify(msg));
     } catch (e) {
-        webSocketRef.onopen = function (){
-            webSocketRef.current.send(JSON.stringify(msg));
-        }
+      webSocketRef.onopen = function () {
+        webSocketRef.current.send(JSON.stringify(msg));
+      };
     }
   }
 
-  useEffect(() => {
+  const createPeer = () => {
     const configuration = {
       iceServers: [
         {
@@ -104,37 +98,41 @@ function Video() {
 
     peerRef.current = new RTCPeerConnection(configuration);
 
-    const setupStream = async () => {
-      localStream.current = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      remoteStream.current = new MediaStream();
+    localStream.current.getTracks().forEach((track) => {
+      peerRef.current.addTrack(track, localStream.current);
+    });
 
-      localStream.current.getTracks().forEach((track) => {
-        peerRef.current.addTrack(track, localStream.current);
+    peerRef.current.ontrack = (event) => {
+      event.streams[0].getTracks().forEach((track) => {
+        remoteStream.current.addTrack(track);
       });
 
-      peerRef.current.ontrack = (event) => {
-        event.streams[0].getTracks().forEach((track) => {
-          remoteStream.current.addTrack(track);
-        });
-      };
-
-      localVideo.current.srcObject = localStream.current;
       remoteVideo.current.srcObject = remoteStream.current;
-
-      if (webSocketRef.current) {
-        connectWs();
-      }
     };
+  };
 
+  const setupStream = async () => {
+    localStream.current = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+    remoteStream.current = new MediaStream();
+
+    localVideo.current.srcObject = localStream.current;
+    remoteVideo.current.srcObject = remoteStream.current;
+
+    if (webSocketRef.current) {
+      connectWs();
+    }
+  };
+
+  useEffect(() => {
     setupStream();
-  }, []);
+  });
 
   const offerConnection = async (id) => {
+    createPeer();
     const offer = await peerRef.current.createOffer();
-    console.log(offer)
     await peerRef.current.setLocalDescription(offer);
     const msg = {
       from: userId.current,
@@ -148,7 +146,6 @@ function Video() {
 
     peerRef.current.onicecandidate = (event) => {
       if (event.candidate) {
-        console.log(event.candidate)
         const msg = {
           to: id,
           messageType: "SIGNAL",
@@ -166,6 +163,7 @@ function Video() {
   };
 
   const handleOffer = async (from, offer) => {
+    createPeer();
     await peerRef.current.setRemoteDescription(
       new RTCSessionDescription(offer),
     );
@@ -215,6 +213,18 @@ function Video() {
     webSocketRef.current.send(JSON.stringify(msg));
     setMessage("");
     setMessages((m) => [...m, msg]);
+  }
+
+  function skip() {
+    if (connectedUserId.current) {
+      var msg = {
+        from: userId.current,
+        messageType: "SIGNAL",
+        category: "SKIP_REQ",
+      };
+
+      webSocketRef.current.send(JSON.stringify(msg));
+    }
   }
 
   return (
@@ -286,7 +296,9 @@ function Video() {
           <button className={styles.toggle} onClick={toggleChat}>
             {isChatToggled ? "video" : "chat"}
           </button>
-          <button className={styles.skip}>Skip</button>
+          <button className={styles.skip} onClick={skip}>
+            Skip
+          </button>
         </footer>
       </div>
     </>
