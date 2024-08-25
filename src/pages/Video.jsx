@@ -85,14 +85,14 @@ function Video() {
 
   const createPeer = () => {
     const configuration = {
-      iceServers: [
-        {
-          urls: [
-            "stun:stun1.l.google.com:19302",
-            "stun:stun2.l.google.com:19302",
-          ],
-        },
+      urls: [
+        "stun:stun.cloudflare.com:3478",
+        "turn:turn.cloudflare.com:3478?transport=udp",
+        "turn:turn.cloudflare.com:3478?transport=tcp",
+        "turns:turn.cloudflare.com:5349?transport=tcp",
       ],
+      username: import.meta.env.WEBRTC_USERNAME,
+      credential: import.meta.env.WEBRTC_CREDENTIAL,
       iceCandidatePoolSize: 10,
     };
 
