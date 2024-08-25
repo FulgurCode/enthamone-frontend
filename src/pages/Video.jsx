@@ -17,7 +17,9 @@ function Video() {
   const [isChatToggled, setIsChatToggled] = useState(false);
 
   useEffect(() => {
-    webSocketRef.current = new WebSocket("ws://localhost:3000/ws/start");
+    webSocketRef.current = new WebSocket(
+      "wss://webrtc.vaishakhgk.com/ws/start",
+    );
 
     if (webSocketRef.current) {
       webSocketRef.current.addEventListener("message", (event) => {
