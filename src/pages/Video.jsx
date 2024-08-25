@@ -17,9 +17,7 @@ function Video() {
   const [isChatToggled, setIsChatToggled] = useState(false);
 
   useEffect(() => {
-    webSocketRef.current = new WebSocket(
-      "wss://webrtc.vaishakhgk.com/ws/start",
-    );
+    webSocketRef.current = new WebSocket("wss://webrtc.vaishakhgk.com/ws/start");
 
     if (webSocketRef.current) {
       webSocketRef.current.addEventListener("message", (event) => {
@@ -130,7 +128,7 @@ function Video() {
 
   useEffect(() => {
     setupStream();
-  });
+  }, []);
 
   const offerConnection = async (id) => {
     createPeer();
@@ -274,7 +272,7 @@ function Video() {
                 <div
                   key={index}
                   className={
-                    message.to == connectedUserId
+                    message.to == connectedUserId.current
                       ? styles.sent
                       : styles.received
                   }
