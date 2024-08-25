@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <div className={styles.header}>
-        <h3>EnthaMone.com</h3>
+        <h3>Entha Mone</h3>
       </div>
       <div className={styles.container}>
         <div className={styles.innerContainer}>
@@ -25,7 +25,7 @@ function Home() {
           </p>
           <button
             onClick={() => {
-              navigate("/video");
+              navigate("/chat");
             }}
           >
             Talk to Strangers

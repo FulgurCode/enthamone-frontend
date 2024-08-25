@@ -10,8 +10,8 @@ video {
 }
 header {
     flex: 1;
-    max-height: 80px;
-    min-height: 80px;
+    max-height: 70px;
+    min-height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
