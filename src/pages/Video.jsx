@@ -69,17 +69,21 @@ function Video() {
   }, []);
 
   function connectWs() {
-    var msg = {
-      messageType: "SIGNAL",
-      category: "CONNECT_REQ",
-    };
-
-    try {
-      webSocketRef.current.send(JSON.stringify(msg));
-    } catch (e) {
-      webSocketRef.onopen = function () {
-        webSocketRef.current.send(JSON.stringify(msg));
+    if (webSocketRef.current) {
+      var msg = {
+        messageType: "SIGNAL",
+        category: "CONNECT_REQ",
       };
+
+      try {
+        webSocketRef.current.send(JSON.stringify(msg));
+      } catch (e) {
+        webSocketRef.current.onopen = function () {
+          webSocketRef.current.send(JSON.stringify(msg));
+        };
+      }
+    } else {
+      setTimeout(connectWs, 2000);
     }
   }
 
@@ -112,21 +116,25 @@ function Video() {
   };
 
   const setupStream = async () => {
-    localStream.current = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    remoteStream.current = new MediaStream();
+    try {
+      localStream.current = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      localVideo.current.srcObject = localStream.current;
 
-    localVideo.current.srcObject = localStream.current;
-    remoteVideo.current.srcObject = remoteStream.current;
-
-    if (webSocketRef.current) {
+      remoteStream.current = new MediaStream();
+      remoteVideo.current.srcObject = remoteStream.current;
       connectWs();
+    } catch (e) {
+      alert("Enable Video/Audio");
     }
   };
 
   useEffect(() => {
+    remoteVideo.current.srcObject = remoteStream.current;
+    localVideo.current.srcObject = localStream.current;
+
     setupStream();
   }, []);
 
