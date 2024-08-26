@@ -13,7 +13,7 @@ function Video() {
   const webSocketRef = useRef();
   const msgRef = useRef(null);
   const userId = useRef();
-  const connectedUserId = useRef();
+  const [connectedUserId, setConnectedUserId] = useState("");
   const [isChatToggled, setIsChatToggled] = useState(false);
 
   useEffect(() => {
@@ -28,18 +28,17 @@ function Video() {
           setMessages((msg) => [...msg, data]);
         } else if (data.messageType == "SIGNAL") {
           if (data.category == "CONNECT_SIGNAL") {
-            connectedUserId.current = data.content;
+            setConnectedUserId(data.content);
             offerConnection(data.content);
           } else if (data.category == "DISCONNECT_SIGNAL") {
             setMessage("");
             setMessages([]);
 
-            connectedUserId.current = "";
+            setConnectedUserId("");
             peerRef.current.close();
 
             remoteStream.current = new MediaStream();
             remoteVideo.current.srcObject = remoteStream.current;
-            setMessages([]);
           } else if (data.category == "ICE_SIGNAL") {
             try {
               const candidate = new RTCIceCandidate(data.content);
@@ -50,7 +49,7 @@ function Video() {
           }
         } else if (data.messageType == "OFFER") {
           if (data.category == "OFFER_REQ") {
-            connectedUserId.current = data.from;
+            setConnectedUserId(data.from);
             handleOffer(data.from, data.content);
           } else if (data.category == "OFFER_ACC") {
             handleAnswer(data.content);
@@ -213,7 +212,7 @@ function Video() {
     if (message == "") return;
 
     var msg = {
-      to: connectedUserId.current,
+      to: connectedUserId,
       messageType: "CHAT",
       content: message,
     };
@@ -224,7 +223,7 @@ function Video() {
   }
 
   function skip() {
-    if (connectedUserId.current) {
+    if (connectedUserId) {
       var msg = {
         from: userId.current,
         messageType: "SIGNAL",
@@ -250,12 +249,15 @@ function Video() {
             ].join(" ")}
           >
             {/* Big Video */}
+
             <video
               id="remoteVideo"
               ref={remoteVideo}
               autoPlay
               controls={false}
             />
+            {connectedUserId == "" ? <div className={styles.loader}></div> : null}
+
             {/* Small video */}
             <div className={styles.videoSmall}>
               <video
@@ -280,7 +282,7 @@ function Video() {
                 <div
                   key={index}
                   className={
-                    message.to == connectedUserId.current
+                    message.to == connectedUserId
                       ? styles.sent
                       : styles.received
                   }
