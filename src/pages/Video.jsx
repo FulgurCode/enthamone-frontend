@@ -17,7 +17,9 @@ function Video() {
   const [isChatToggled, setIsChatToggled] = useState(false);
 
   useEffect(() => {
-    webSocketRef.current = new WebSocket("wss://webrtc.vaishakhgk.com/ws/start");
+    webSocketRef.current = new WebSocket(
+      "wss://webrtc.vaishakhgk.com/ws/start",
+    );
 
     if (webSocketRef.current) {
       webSocketRef.current.addEventListener("message", (event) => {
@@ -88,12 +90,7 @@ function Video() {
 
   const createPeer = () => {
     const configuration = {
-      urls: [
-        "stun:stun.cloudflare.com:3478",
-        "turn:turn.cloudflare.com:3478?transport=udp",
-        "turn:turn.cloudflare.com:3478?transport=tcp",
-        "turns:turn.cloudflare.com:5349?transport=tcp",
-      ],
+      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
       username: import.meta.env.WEBRTC_USERNAME,
       credential: import.meta.env.WEBRTC_CREDENTIAL,
       iceCandidatePoolSize: 10,
@@ -256,7 +253,9 @@ function Video() {
               autoPlay
               controls={false}
             />
-            {connectedUserId == "" ? <div className={styles.loader}></div> : null}
+            {connectedUserId == "" ? (
+              <div className={styles.loader}></div>
+            ) : null}
 
             {/* Small video */}
             <div className={styles.videoSmall}>
