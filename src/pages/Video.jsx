@@ -123,7 +123,7 @@ function Video() {
       remoteVideo.current.srcObject = remoteStream.current;
       connectWs();
     } catch (e) {
-      alert("Enable Video/Audio");
+      alert("Video/Audio enable akkathe entha mone kali?");
     }
   };
 
