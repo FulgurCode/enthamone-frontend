@@ -206,7 +206,7 @@ function Video() {
   }
 
   function sendMsg() {
-    if (message == "") return;
+    if (message == "" || connectedUserId == "") return;
 
     var msg = {
       to: connectedUserId,
@@ -220,6 +220,7 @@ function Video() {
   }
 
   function skip() {
+    // setConnectedUserId("");
     if (connectedUserId) {
       var msg = {
         from: userId.current,
@@ -243,6 +244,7 @@ function Video() {
             className={[
               styles.video,
               isChatToggled ? styles.hide : styles.show,
+              connectedUserId == "" ? null : styles.connected,
             ].join(" ")}
           >
             {/* Big Video */}
@@ -252,6 +254,7 @@ function Video() {
               ref={remoteVideo}
               autoPlay
               controls={false}
+              playsInline
             />
             {connectedUserId == "" ? (
               <div className={styles.loader}></div>
@@ -265,6 +268,7 @@ function Video() {
                 muted
                 autoPlay
                 controls={false}
+                playsInline
               />
             </div>
           </div>

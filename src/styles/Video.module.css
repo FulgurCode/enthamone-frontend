@@ -20,7 +20,7 @@ header {
     color: var(--text);
     background-color: var(--background-shade-2);
     margin: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 .content {
     flex: 1;
@@ -33,16 +33,17 @@ footer {
     min-height: 80px;
     background-color: var(--background-shade-2);
     margin: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
     display: flex;
-    /* flex-direction: row-reverse; */
-    justify-content: space-between;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
     padding: 10px;
+    gap: 10px;
 }
 .video {
     flex: 1;
     margin-inline-start: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: var(--background-shade-1);
     border: 2px solid var(--background-shade-3);
     overflow: hidden;
@@ -50,6 +51,9 @@ footer {
 
     flex-direction: column;
     position: relative;
+}
+.connected {
+    border: 2px solid var(--secondary);
 }
 .video > video {
     max-width: 100%;
@@ -65,7 +69,7 @@ footer {
     height: 200px;
     bottom: 20px;
     left: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: black;
     overflow: hidden;
 }
@@ -80,7 +84,7 @@ footer {
     flex: 1;
     max-width: 400px;
     margin-inline: 5px;
-    border-radius: 10px;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
 }
@@ -98,7 +102,7 @@ footer {
 .chat > .msg > .sent,
 .chat > .msg > .received {
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     max-width: 100%;
     overflow-wrap: anywhere;
     border: 1px solid var(--accent-shade-1);
@@ -122,24 +126,27 @@ footer {
     flex: 3;
     background-color: var(--background-shade-3);
     border: 2px solid var(--background-shade-4);
-    border-radius: 8px;
+    border-radius: 15px;
     font-size: large;
-    padding: 12px 10px;
+    padding: 12px 15px;
     resize: none;
 
     font-family: inherit;
     font-size: inherit;
 }
+.chat > .textArea > textarea::placeholder{
+    color: rgba(197, 238, 255, 0.722);
+}
 .chat > .textArea > button {
     flex: 1;
     background-color: var(--background-shade-4);
     border: none;
-    border-radius: 8px;
+    border-radius: 15px;
 }
 footer > button {
     background-color: var(--background-shade-3);
     border: 2px solid var(--background-shade-4);
-    border-radius: 8px;
+    border-radius: 10px;
     width: 100px;
 }
 footer > button:hover {
@@ -148,12 +155,16 @@ footer > button:hover {
 button {
     font-size: large;
 }
+button:focus {
+    outline: none;
+}
 .skip {
-    border: 2px solid var(--primary);
+    border: 2px solid var(--secondary);
 }
 .toggle {
     visibility: hidden;
 }
+
 
 @media (max-width: 900px) {
     .videoSmall {
@@ -193,6 +204,10 @@ button {
     }
     .video {
         margin-right: 5px;
+    }
+    footer {
+        flex-direction: row;
+        justify-content: flex-start;
     }
 }
 
