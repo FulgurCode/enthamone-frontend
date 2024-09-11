@@ -37,10 +37,12 @@ function Video() {
             setMessages([]);
 
             setConnectedUserId("");
-            peerRef.current.close();
+            if(peerRef.current) {
+                peerRef.current.close();
 
-            remoteStream.current = new MediaStream();
-            remoteVideo.current.srcObject = remoteStream.current;
+                remoteStream.current = new MediaStream();
+                remoteVideo.current.srcObject = remoteStream.current;
+            }
           } else if (data.category == "ICE_SIGNAL") {
             try {
               const candidate = new RTCIceCandidate(data.content);
@@ -220,8 +222,16 @@ function Video() {
   }
 
   function skip() {
-    // setConnectedUserId("");
     if (connectedUserId) {
+      setMessage("");
+      setMessages([]);
+
+      setConnectedUserId("");
+      peerRef.current.close();
+
+      remoteStream.current = new MediaStream();
+      remoteVideo.current.srcObject = remoteStream.current;
+
       var msg = {
         from: userId.current,
         messageType: "SIGNAL",
