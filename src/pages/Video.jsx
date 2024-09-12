@@ -15,6 +15,7 @@ function Video() {
   const userId = useRef();
   const [connectedUserId, setConnectedUserId] = useState("");
   const [isChatToggled, setIsChatToggled] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     webSocketRef.current = new WebSocket(
@@ -37,11 +38,12 @@ function Video() {
             setMessages([]);
 
             setConnectedUserId("");
-            if(peerRef.current) {
-                peerRef.current.close();
+            setLoader(true);
+            if (peerRef.current) {
+              peerRef.current.close();
 
-                remoteStream.current = new MediaStream();
-                remoteVideo.current.srcObject = remoteStream.current;
+              remoteStream.current = new MediaStream();
+              remoteVideo.current.srcObject = remoteStream.current;
             }
           } else if (data.category == "ICE_SIGNAL") {
             try {
@@ -166,6 +168,7 @@ function Video() {
   const handleAnswer = (answer) => {
     const answerDescription = new RTCSessionDescription(answer);
     peerRef.current.setRemoteDescription(answerDescription);
+    setLoader(false);
   };
 
   const handleOffer = async (from, offer) => {
@@ -196,6 +199,7 @@ function Video() {
         webSocketRef.current.send(JSON.stringify(msg));
       }
     };
+    setLoader(false);
   };
 
   // message scroll to bottom when updating
@@ -227,6 +231,7 @@ function Video() {
       setMessages([]);
 
       setConnectedUserId("");
+      setLoader(true);
       peerRef.current.close();
 
       remoteStream.current = new MediaStream();
@@ -266,9 +271,7 @@ function Video() {
               controls={false}
               playsInline
             />
-            {connectedUserId == "" ? (
-              <div className={styles.loader}></div>
-            ) : null}
+            {loader ? <div className={styles.loader}></div> : null}
 
             {/* Small video */}
             <div className={styles.videoSmall}>
