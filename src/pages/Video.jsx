@@ -314,13 +314,14 @@ function Video() {
             </div>
 
             <div className={styles.textArea}>
-              <textarea
+              <input type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
                 onKeyDown={keyPress}
-              ></textarea>
-              <button onClick={sendMsg}>send</button>
+                autoFocus
+              />
+              <button onClick={sendMsg} onMouseDown={(e) => e.preventDefault()} onTouchStart={(e) => e.preventDefault()}>send</button>
             </div>
           </div>
         </div>
