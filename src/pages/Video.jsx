@@ -224,6 +224,12 @@ function Video() {
     setMessages((m) => [...m, msg]);
   }
 
+  function keyPress(e) {
+    if (e.keyCode == 13) {
+      e.shiftKey ? setMessage((message) => message + "\n") : sendMsg();
+    }
+  }
+
   function skip() {
     if (connectedUserId) {
       setMessage("");
@@ -312,6 +318,7 @@ function Video() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
+                onKeyDown={keyPress}
               ></textarea>
               <button onClick={sendMsg}>send</button>
             </div>
