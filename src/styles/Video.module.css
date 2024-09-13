@@ -122,7 +122,7 @@ footer {
     display: flex;
     gap: 5px;
 }
-.chat > .textArea > textarea {
+.chat > .textArea > input[type=text] {
     flex: 3;
     background-color: var(--background-shade-3);
     border: 2px solid var(--background-shade-4);
@@ -134,7 +134,7 @@ footer {
     font-family: inherit;
     font-size: inherit;
 }
-.chat > .textArea > textarea::placeholder{
+.chat > .textArea > input[type=text]::placeholder{
     color: rgba(197, 238, 255, 0.722);
 }
 .chat > .textArea > button {
