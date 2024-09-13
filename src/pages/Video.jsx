@@ -112,6 +112,7 @@ function Video() {
       });
 
       remoteVideo.current.srcObject = remoteStream.current;
+      setLoader(false);
     };
   };
 
@@ -168,7 +169,6 @@ function Video() {
   const handleAnswer = (answer) => {
     const answerDescription = new RTCSessionDescription(answer);
     peerRef.current.setRemoteDescription(answerDescription);
-    setLoader(false);
   };
 
   const handleOffer = async (from, offer) => {
@@ -199,7 +199,6 @@ function Video() {
         webSocketRef.current.send(JSON.stringify(msg));
       }
     };
-    setLoader(false);
   };
 
   // message scroll to bottom when updating
