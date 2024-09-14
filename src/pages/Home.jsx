@@ -14,7 +14,7 @@ function Home() {
         You must be 18 years or older to use this service.
         <span>
           <button className={styles.secondaryButton} onClick={() => {navigate("/chat")}}>I am 18 years or older</button>
-          <button className={styles.primaryButton} onClick={() => {window.location.href = 'https://google.com'}}>I am not 18</button>
+          <button className={styles.primaryButton} onClick={() => {window.location.href = "https://www.youtube.com/watch?v=020g-0hhCAU"}}>I am not 18</button>
         </span>
       </dialog> 
       <div className={styles.header}>

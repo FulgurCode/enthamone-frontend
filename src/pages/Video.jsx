@@ -16,6 +16,7 @@ function Video() {
   const [connectedUserId, setConnectedUserId] = useState("");
   const [isChatToggled, setIsChatToggled] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [unReadMsg, setUnReadMsg] = useState(false);
 
   useEffect(() => {
     webSocketRef.current = new WebSocket(
@@ -201,13 +202,18 @@ function Video() {
     };
   };
 
-  // message scroll to bottom when updating
+  // message scroll to bottom when updating and msg Indicator
   useEffect(() => {
     msgRef.current.scrollTop = msgRef.current.scrollHeight;
+    if (!isChatToggled && messages.length > 0) {
+      setUnReadMsg(true);
+      console.log(messages);
+    }
   }, [messages]);
 
   function toggleChat() {
     setIsChatToggled(!isChatToggled);
+    setUnReadMsg(false);
   }
 
   function sendMsg() {
@@ -326,7 +332,7 @@ function Video() {
           </div>
         </div>
         <footer>
-          <button className={styles.toggle} onClick={toggleChat}>
+          <button className={[styles.toggle, unReadMsg && styles.msgIndicator].join(" ")} onClick={toggleChat}>
             {isChatToggled ? "video" : "chat"}
           </button>
           <button className={styles.skip} onClick={skip}>

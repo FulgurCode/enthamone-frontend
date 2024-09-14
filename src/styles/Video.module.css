@@ -165,6 +165,19 @@ button:focus {
     visibility: hidden;
 }
 
+.msgIndicator{position: relative;}
+.msgIndicator::after{
+    content: "";
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background-color: rgb(242, 106, 106);
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
 
 @media (max-width: 900px) {
     .videoSmall {
