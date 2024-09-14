@@ -45,6 +45,65 @@
     font-weight: 600;
 }
 
+dialog {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    color: var(--text);
+    background-color: var(--background);
+    border: 3px solid var(--background-shade-4);
+    outline: none;
+    border-radius: 20px;
+    padding: 2rem;
+
+    min-width: max-content;
+}
+  
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+dialog::backdrop{
+    backdrop-filter: blur(5px);
+}
+
+dialog:focus{
+    outline: none;
+}
+
+dialog button{
+    padding: .5rem;
+    padding-inline: 1rem;
+    border: none;
+    border-radius: 13px;
+
+    min-width: fit-content;
+}
+dialog button:hover{
+    opacity: .9;
+}
+dialog button:active{
+    opacity: .5;
+}
+dialog > span{
+    gap: 1rem;
+    display: flex;
+    margin-top: 1rem;
+}
+
+.primaryButton{
+    background-color: var(--primary);
+    color: var(--background);
+}
+.secondaryButton{
+    background-color: var(--background-shade-3);
+}
+
 @media (max-width: 1250px) {
     .illustration {
         position: absolute;
