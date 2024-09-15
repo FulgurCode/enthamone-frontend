@@ -13,9 +13,11 @@ function Video() {
   const webSocketRef = useRef();
   const msgRef = useRef(null);
   const userId = useRef();
+
   const [connectedUserId, setConnectedUserId] = useState("");
   const [isChatToggled, setIsChatToggled] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [warning, setWarning] = useState(false);
   const [unReadMsg, setUnReadMsg] = useState(false);
 
   useEffect(() => {
@@ -129,6 +131,8 @@ function Video() {
       remoteVideo.current.srcObject = remoteStream.current;
       connectWs();
     } catch (e) {
+      setLoader(false);
+      setWarning(true);
       alert("Video/Audio enable akkathe entha mone kali?");
     }
   };
@@ -266,36 +270,44 @@ function Video() {
         </header>
         <div className={styles.content}>
           {/* Video */}
-          <div
-            className={[
-              styles.video,
-              isChatToggled ? styles.hide : styles.show,
-              connectedUserId == "" ? null : styles.connected,
-            ].join(" ")}
-          >
-            {/* Big Video */}
+          {!warning ? (
+            <div
+              className={[
+                styles.video,
+                isChatToggled ? styles.hide : styles.show,
+                connectedUserId == "" ? null : styles.connected,
+              ].join(" ")}
+            >
+              {/* Big Video */}
 
-            <video
-              id="remoteVideo"
-              ref={remoteVideo}
-              autoPlay
-              controls={false}
-              playsInline
-            />
-            {loader ? <div className={styles.loader}></div> : null}
-
-            {/* Small video */}
-            <div className={styles.videoSmall}>
               <video
-                ref={localVideo}
-                id="localVideo"
-                muted
+                id="remoteVideo"
+                ref={remoteVideo}
                 autoPlay
                 controls={false}
                 playsInline
               />
+              {loader ? <div className={styles.loader}></div> : null}
+
+              {/* Small video */}
+              <div className={styles.videoSmall}>
+                <video
+                  ref={localVideo}
+                  id="localVideo"
+                  muted
+                  autoPlay
+                  controls={false}
+                  playsInline
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={styles.video}>
+              <h4>
+                Give Video & Audio permission for website to function properly
+              </h4>
+            </div>
+          )}
 
           <div
             className={[
@@ -320,19 +332,31 @@ function Video() {
             </div>
 
             <div className={styles.textArea}>
-              <input type="text"
+              <input
+                type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
                 onKeyDown={keyPress}
                 autoFocus
               />
-              <button onClick={sendMsg} onMouseDown={(e) => e.preventDefault()} onTouchStart={(e) => e.preventDefault()}>send</button>
+              <button
+                onClick={sendMsg}
+                onMouseDown={(e) => e.preventDefault()}
+                onTouchStart={(e) => e.preventDefault()}
+              >
+                send
+              </button>
             </div>
           </div>
         </div>
         <footer>
-          <button className={[styles.toggle, unReadMsg && styles.msgIndicator].join(" ")} onClick={toggleChat}>
+          <button
+            className={[styles.toggle, unReadMsg && styles.msgIndicator].join(
+              " ",
+            )}
+            onClick={toggleChat}
+          >
             {isChatToggled ? "video" : "chat"}
           </button>
           <button className={styles.skip} onClick={skip}>
