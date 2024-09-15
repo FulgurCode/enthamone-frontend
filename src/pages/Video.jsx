@@ -287,6 +287,9 @@ function Video() {
                 controls={false}
                 playsInline
               />
+              <span className={[styles.connectedIndicator, connectedUserId === "" && styles.connectedIndicatorTrue].join(" ")}>
+                {connectedUserId === "" ? 'trying....' : 'connected'}
+              </span>
               {loader ? <div className={styles.loader}></div> : null}
 
               {/* Small video */}
