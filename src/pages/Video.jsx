@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Video.module.css";
+import warningLogo from "../assets/warning.svg";
 
 function Video() {
   const [messages, setMessages] = useState([]);
@@ -133,7 +134,6 @@ function Video() {
     } catch (e) {
       setLoader(false);
       setWarning(true);
-      alert("Video/Audio enable akkathe entha mone kali?");
     }
   };
 
@@ -302,10 +302,15 @@ function Video() {
               </div>
             </div>
           ) : (
-            <div className={styles.video}>
+            <div className={[styles.video, styles.warning].join(" ")}>
+              <img src={warningLogo} alt="warning"/>
               <h4>
-                Give Video & Audio permission for website to function properly
+                Important Notice: Enable Video/Audio Permissions
               </h4>
+              <p>
+                To ensure that our website functions properly and you have the best experience, 
+                please enable video and audio permissions in your browser settings and reload the page.
+              </p>
             </div>
           )}
 
