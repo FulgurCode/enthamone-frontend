@@ -179,6 +179,20 @@ button:focus {
     transform: translate(50%, -50%);
 }
 
+.warning{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 1rem;
+    gap: 1rem;
+}
+.warning img{
+    width: 2rem;
+    height: 2rem;
+}
+
 @media (max-width: 900px) {
     .videoSmall {
         position: relative;
