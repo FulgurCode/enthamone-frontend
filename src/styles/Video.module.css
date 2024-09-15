@@ -193,6 +193,26 @@ button:focus {
     height: 2rem;
 }
 
+.connectedIndicator{
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+    margin: .5rem;
+}
+.connectedIndicator:before{
+    content: "";
+    display: inline-block;
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background-color: var(--primary);
+    margin-right: .3rem;
+}
+.connectedIndicatorTrue:before{
+    background-color: rgb(242, 106, 106);
+}
+
 @media (max-width: 900px) {
     .videoSmall {
         position: relative;
