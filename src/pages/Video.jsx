@@ -21,7 +21,7 @@ function Video() {
   const [warning, setWarning] = useState(false);
   const [unReadMsg, setUnReadMsg] = useState(false);
 
-  useEffect(() => {
+  function setUpWebSocket() {
     webSocketRef.current = new WebSocket(
       "wss://webrtc.vaishakhgk.com/ws/start",
     );
@@ -66,16 +66,8 @@ function Video() {
           }
         }
       });
-
-      /* webSocketRef.current.onopen = connectWs; */
     }
-
-    return () => {
-      if (webSocketRef.current) {
-        webSocketRef.current.close();
-      }
-    };
-  }, []);
+  }
 
   function connectWs() {
     if (webSocketRef.current) {
@@ -130,6 +122,8 @@ function Video() {
 
       remoteStream.current = new MediaStream();
       remoteVideo.current.srcObject = remoteStream.current;
+
+      setUpWebSocket()
       connectWs();
     } catch (e) {
       setLoader(false);
@@ -142,6 +136,12 @@ function Video() {
     localVideo.current.srcObject = localStream.current;
 
     setupStream();
+
+    return () => {
+      if (webSocketRef.current) {
+        webSocketRef.current.close();
+      }
+    };
   }, []);
 
   const offerConnection = async (id) => {
@@ -311,8 +311,9 @@ function Video() {
                 Important Notice: Enable Video/Audio Permissions
               </h4>
               <p>
-                To ensure that our website functions properly and you have the best experience, 
-                please enable video and audio permissions in your browser settings and reload the page.
+                To ensure that our website functions properly and you have the
+                best experience, please enable video and audio permissions in
+                your browser settings and reload the page.
               </p>
             </div>
           )}
