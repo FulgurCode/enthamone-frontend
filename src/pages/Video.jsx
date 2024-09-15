@@ -302,7 +302,7 @@ function Video() {
               </div>
             </div>
           ) : (
-            <div className={[styles.video, styles.warning].join(" ")}>
+            <div className={[styles.video, warning && styles.warning, isChatToggled ? styles.hide : styles.show,].join(" ")}>
               <img src={warningLogo} alt="warning"/>
               <h4>
                 Important Notice: Enable Video/Audio Permissions
